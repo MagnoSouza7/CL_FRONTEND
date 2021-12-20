@@ -1,0 +1,31 @@
+<div class="container-fluid">
+   <div class="row mb-4">
+      <div class="col-md-12">
+         <app-formulario-cadastro
+            [form]="clienteForm"
+            [titulo]="'Cliente'"
+            [id]="clienteId"
+            [tipo]="'cliente'"
+            [dados]="clientes"
+            [exibirListagem]="exibirListagem"
+            (cadastrar)="cadastrarCliente()"
+            (alterar)="alterarCliente()"
+            (limpar)="limpar()"
+            (verificar)="verificarClientes($event)"
+            (exibir)="exibirLista()"
+            (selecionar)="selecionarCliente($event)"
+            [verifyNomes]="verifyCliente">
+         </app-formulario-cadastro>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <app-tabela-cadastro
+            [titulo]="'Cliente'"
+            [tipo]="'cliente'"
+            [dados]="clientes"
+            (pegarDado)="selecionarCliente($event)">
+         </app-tabela-cadastro>
+      </div>
+   </div>
+</div>

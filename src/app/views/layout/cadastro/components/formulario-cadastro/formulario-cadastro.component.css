@@ -1,0 +1,98 @@
+*{
+   margin: 0;
+   padding: 0;
+}
+
+.cardFormulario{
+   width: 80vw;
+   padding: 20px;
+   box-shadow: 0 8px 14px -6px black;
+}
+
+legend{
+   margin-bottom: 20px;
+}
+
+.titulo {
+   padding: 0px 20px 0px 0px;
+   margin: 0px 0px 0px 12px;
+   color: rgb(4, 83, 211);
+   border-bottom: 2px solid rgb(16, 16, 16);
+}
+
+.botao {
+   font-size: 14pt;
+   border: none;
+   border-radius: 5px;
+   padding: 0px 10px;
+   height: 40px;
+}
+
+.listaPesquisa {
+   width: 100%;
+   border-radius: 2px;
+   position: absolute;
+   margin-top: 62px;
+   right: 1px;
+   z-index: 1;
+   max-height: 18rem;
+   overflow-y: scroll;
+   cursor: pointer;
+   border: 1px solid rgb(175, 175, 175);
+   border-radius: 5px;
+}
+
+.listaNome{
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   text-transform: uppercase;
+   padding: 8px;
+}
+
+.listaNome:hover {
+   background-color: rgb(87, 174, 255);
+}
+
+.listaPesquisa::-webkit-scrollbar {
+   width: 0px;
+   overflow: hidden;
+}
+.listaPesquisa::-webkit-scrollbar-track {
+   overflow: hidden;
+}
+.listaPesquisa::-webkit-scrollbar-thumb {
+   overflow: hidden;
+}
+
+
+
+.ng-valid[required],
+
+.ng-valid.required {
+   border-left: 5px solid #42a948;
+}
+
+.ng-invalid:not(form) {
+   border-left: 5px solid #a94442;
+}
+
+.ng-invalid[_ngcontent-c1]:not(form) {
+   border-left: 5px solid #f26522;
+}
+
+.layers.bd.bgc-white.p-20 {
+   border: 1px solid rgb(156, 191, 71) !important;
+}
+
+.my-drop-zone {
+   border: dotted 3px lightgray;
+}
+
+.nv-file-over {
+   border: dotted 3px red;
+}
+
+.another-file-over-class {
+   border: dotted 3px green;
+}

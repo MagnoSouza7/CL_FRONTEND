@@ -1,0 +1,22 @@
+<div class="container-fluid" id="bloco">
+   <div class="row mb-4">
+      <div class="col-md-12">
+         <app-formulario-cadastro
+            [form]="portalForm"
+            [titulo]="'Portal'"
+            [id]="portalId"
+            (cadastrar)="cadastrarPortal()"
+            (alterar)="alterarPortal()"
+            (limpar)="limpar()">
+         </app-formulario-cadastro>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <app-tabela-cadastro [titulo]="'Portais'" [dados]="portais" (pegarDado)="selecionarPortal($event)"></app-tabela-cadastro>
+      </div>
+   </div>
+</div>
+
+

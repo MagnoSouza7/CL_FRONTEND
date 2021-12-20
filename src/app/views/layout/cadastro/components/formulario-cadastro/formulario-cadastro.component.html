@@ -1,0 +1,73 @@
+<form class="d-flex justify-content-center align-items-center flex-column" [formGroup]="form">
+   <div class="card cardFormulario">
+      <legend><span class="titulo">Cadastrar {{titulo}}</span></legend>
+      <div class="form-row px-3 d-flex-md justify-content-between">
+
+         <div class="form-group col-md-4 d-flex flex-column" *ngIf="tipo == 'cliente' || tipo == 'concorrente'">
+            <label class="active">Nome</label>
+            <input type="text" class="form-control px-2" formControlName="nome" name="nome" (keyup)="verificarNome($event)" (focusout)="exibirLista()" required>
+            <div class="listaPesquisa" *ngIf="exibirListagem">
+               <ul class="list-group list-group-flush">
+                 <li class="list-group-item listaNome" *ngFor="let verify of verifyNomes" (click)="selecionarNome(verify)">{{ verify.nome }}</li>
+               </ul>
+            </div>
+         </div>
+
+         <div class="form-group col-md-4 d-flex flex-column" *ngIf="tipo == 'preVenda'">
+            <label class="active">Nome</label>
+            <select class="form-control px-2" formControlName="nome" name="nome" required>
+               <option value="" [disabled]="id">--Selecione--</option>
+               <option *ngFor="let usuario of dados" [disabled]="id" value="{{usuario.id}}">{{ usuario.nome }}</option>
+            </select>
+         </div>
+
+         <div class="form-group col-md-3 d-flex flex-column" *ngIf="tipo == 'cliente' || tipo == 'concorrente'">
+            <label class="active">Apelido</label>
+            <input type="text" class="form-control px-2" formControlName="apelido" name="apelido" required>
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+         </div>
+
+         <div class="form-group col-md-3 d-flex flex-column" *ngIf="tipo == 'cliente' || tipo == 'concorrente'">
+            <label class="active">CNPJ</label>
+            <input mask="00.000.000/0000-00" type="text" class="form-control px-2" formControlName="cnpj" name="cnpj" required>
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+         </div>
+
+         <div class="form-group col-md-4 d-flex flex-column" *ngIf="tipo != 'cliente' && tipo != 'preVenda' && tipo != 'concorrente'">
+            <label class="active">Nome</label>
+            <input type="text" class="form-control px-2" formControlName="nome" name="nome" required>
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+         </div>
+
+         <div class="form-group col-md-3 d-flex flex-column" *ngIf="tipo == 'categoria'">
+            <label class="active">Bu</label>
+            <select class="form-control px-2" formControlName="bu" name="bu">
+               <option value="">--Selecione--</option>
+               <option *ngFor="let bu of dados" value="{{bu.id}}">{{ bu.nome }}</option>
+            </select>
+         </div>
+
+         <div class="form-group col-md-2 d-flex flex-column" *ngIf="id">
+            <label class="active">Status</label>
+            <div class="form-group col-md-12 ml-2">
+               <div class="form-check radio">
+                  <input class="" type="radio" formControlName="ativo" name="ativo" value="true">
+                  <span class="ml-2">Ativo</span>
+               </div>
+               <div class="form-check radio">
+                  <input class="" type="radio" formControlName="ativo" name="ativo" value="false">
+                  <span class="ml-2">Desativar</span>
+               </div>
+            </div>
+         </div>
+
+         <div class="form-group d-flex justify-content-end mt-4" [ngClass]="{'col-md-12': (tipo == 'cliente' || tipo == 'concorrente')}">
+            <div class="btn-group">
+               <button class="btn btn-success botao" (click)="create()" [disabled]="id || !form.valid">Cadastrar</button>
+               <button class="btn btn-warning botao" (click)="update()" [disabled]="!id">Alterar</button>
+               <button class="btn btn-danger botao" (click)="clean()">Limpar</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>

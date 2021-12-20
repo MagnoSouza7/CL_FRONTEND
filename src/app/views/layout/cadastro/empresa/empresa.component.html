@@ -1,0 +1,20 @@
+<div class="container-fluid">
+   <div class="row mb-4">
+      <div class="col-md-12">
+         <app-formulario-cadastro
+            [form]="empresaForm"
+            [titulo]="'Empresa'"
+            [id]="empresaId"
+            (cadastrar)="cadastrarEmpresa()"
+            (alterar)="alterarEmpresa()"
+            (limpar)="limpar()">
+         </app-formulario-cadastro>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="areatabela d-flex justify-content-center align-items-center">
+         <app-tabela-cadastro [titulo]="'Empresas'" [dados]="empresas" (pegarDado)="selecionarEmpresa($event)"></app-tabela-cadastro>
+      </div>
+   </div>
+</div>

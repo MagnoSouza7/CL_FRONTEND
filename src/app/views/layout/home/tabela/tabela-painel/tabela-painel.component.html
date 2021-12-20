@@ -1,0 +1,150 @@
+<div class="card cardTabela" *ngIf="(tipo == 'Suspenso' || tipo == 'Painel') && editais != undefined && editais.length > 0">
+   <div class="row d-flex justify-content-between tituloTabela"
+      [ngClass]="{
+         'corSuspenso': titulo == 'EDITAIS SUSPENSOS',
+         'corNoGo': titulo == 'EDITAIS NOGO',
+         'corGo': titulo == 'EDITAIS GO',
+         'corTotal': titulo == 'EDITAIS CADASTRADOS',
+         'corGanhos': titulo == 'EDITAIS GANHOS',
+         'corPerda': titulo == 'EDITAIS PERDAS'
+      }">
+      <div class="col-md-11 d-flex justify-content-center align-items-center">
+         {{titulo}} &nbsp; <span class="badge badge-pill badge-light">{{editais.length}}</span>
+      </div>
+      <div class="col-md-1 d-flex justify-content-around align-items-center">
+         <i [ngClass]="{'fa-expand': !tabelaExpandida, 'fa-compress': tabelaExpandida}" (click)="changeIconExpand()"
+            data-toggle="collapse"
+            [attr.data-target]="'#' + tipo"
+            [attr.aria-controls]="tipo"
+            aria-expanded="false"
+            class="fa iconeTopoTabela"></i>
+         <i class="fa fa-close iconeTopoTabela" (click)="closeTabelaPainel()"></i>
+      </div>
+   </div>
+   <div *ngIf="editais != undefined && editais.length > 0" class="collapse" id="{{tipo}}" [ngClass]="{scroll: editais.length > 10, scrollX: editais.length <= 10}">
+      <table class="table table-striped tabelaParecer">
+         <thead>
+            <tr>
+               <th>ID</th>
+
+               <ng-template #Cliente>
+                  <button class="btn btn-info" (click)="ordenar('cliente')" *ngIf="nomeColuna == '' || nomeColuna != 'cliente'">Crescente</button>
+                  <button class="btn btn-info" (click)="ordenar('cliente')" *ngIf="nomeColuna == 'cliente'">Decrecente</button>
+               </ng-template>
+               <th class="popUp" placement="bottom" container="body" [ngbPopover]="Cliente">CLIENTE</th>
+
+               <th>Nº EDITAL</th>
+               <th>UASG</th>
+
+               <ng-template #Categoria>
+                  <button class="btn btn-info" (click)="ordenar('categoria')" *ngIf="nomeColuna == '' || nomeColuna != 'categoria'">Crescente</button>
+                  <button class="btn btn-info" (click)="ordenar('categoria')" *ngIf="nomeColuna == 'categoria'">Decrecente</button>
+               </ng-template>
+               <th class="popUp" placement="bottom" container="body" [ngbPopover]="Categoria">CATEGORIA</th>
+
+               <ng-template #Empresa>
+                  <button class="btn btn-info" (click)="ordenar('empresa')" *ngIf="nomeColuna == '' || nomeColuna != 'empresa'">Crescente</button>
+                  <button class="btn btn-info" (click)="ordenar('empresa')" *ngIf="nomeColuna == 'empresa'">Decrecente</button>
+               </ng-template>
+               <th *ngIf="titulo == 'EDITAIS GANHOS'" class="popUp" placement="bottom" container="body" [ngbPopover]="Empresa">EMPRESA</th>
+
+               <ng-template #Regiao>
+                  <button class="btn btn-info" (click)="ordenar('regiao')" *ngIf="nomeColuna == '' || nomeColuna != 'regiao'">Crescente</button>
+                  <button class="btn btn-info" (click)="ordenar('regiao')" *ngIf="nomeColuna == 'regiao'">Decrecente</button>
+               </ng-template>
+               <th class="popUp" placement="bottom" container="body" [ngbPopover]="Regiao">REGIÃO</th>
+
+               <ng-template #Uf>
+                  <button class="btn btn-info" (click)="ordenar('uf')" *ngIf="nomeColuna == '' || nomeColuna != 'uf'">Crescente</button>
+                  <button class="btn btn-info" (click)="ordenar('uf')" *ngIf="nomeColuna == 'uf'">Decrecente</button>
+               </ng-template>
+               <th class="popUp" placement="bottom" container="body" [ngbPopover]="Uf">UF</th>
+
+
+               <ng-template #DataAbertura>
+                  <button class="btn btn-info" (click)="ordenar('dataAbertura')" *ngIf="nomeColuna == '' || nomeColuna != 'dataAbertura'">Crescente</button>
+                  <button class="btn btn-info" (click)="ordenar('dataAbertura')" *ngIf="nomeColuna == 'dataAbertura'">Decrecente</button>
+               </ng-template>
+               <th class="popUp" placement="bottom" container="body" [ngbPopover]="DataAbertura">DATA DE ABERTURA</th>
+
+               <ng-template #NossoValor>
+                  <button class="btn btn-info" (click)="ordenar('nossoValor')" *ngIf="nomeColuna == '' || nomeColuna != 'nossoValor'">Crescente</button>
+                  <button class="btn btn-info" (click)="ordenar('nossoValor')" *ngIf="nomeColuna == 'nossoValor'">Decrecente</button>
+               </ng-template>
+               <th *ngIf="titulo == 'EDITAIS GANHOS'" class="popUp" placement="bottom" container="body" [ngbPopover]="NossoValor">VALOR</th>
+
+               <ng-template #Modalidade>
+                  <button class="btn btn-info" (click)="ordenar('modalidade')" *ngIf="nomeColuna == '' || nomeColuna != 'modalidade'">Crescente</button>
+                  <button class="btn btn-info" (click)="ordenar('modalidade')" *ngIf="nomeColuna == 'modalidade'">Decrecente</button>
+               </ng-template>
+               <th class="popUp" placement="bottom" container="body" [ngbPopover]="Modalidade">MODALIDADE</th>
+
+               <ng-template #Portal>
+                  <button class="btn btn-info" (click)="ordenar('portal')" *ngIf="nomeColuna == '' || nomeColuna != 'portal'">Crescente</button>
+                  <button class="btn btn-info" (click)="ordenar('portal')" *ngIf="nomeColuna == 'portal'">Decrecente</button>
+               </ng-template>
+               <th class="popUp" placement="bottom" container="body" [ngbPopover]="Portal">PORTAL</th>
+
+               <ng-template #Motivo>
+                  <button class="btn btn-info" (click)="ordenar('motivo')" *ngIf="nomeColuna == '' || nomeColuna != 'motivo'">Crescente</button>
+                  <button class="btn btn-info" (click)="ordenar('motivo')" *ngIf="nomeColuna == 'motivo'">Decrecente</button>
+               </ng-template>
+               <th *ngIf="titulo == 'EDITAIS NOGO'" class="popUp" placement="bottom" container="body" [ngbPopover]="Motivo">MOTIVO</th>
+
+               <th>COMENTÁRIO</th>
+
+               <th *ngIf="titulo == 'EDITAIS GO' || titulo == 'EDITAIS GANHOS'" >ANEXO</th>
+
+
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let edital of editais" (click)="funcaoNoEdital(edital)">
+               <td>{{edital.id}}</td>
+               <td placement="top" ngbTooltip="{{edital.cliente.apelido}}" container="body" tooltipClass="tooltip">{{edital.cliente.apelido}}</td>
+               <td>{{edital.numEdital}}</td>
+               <td>{{edital.uasg}}</td>
+
+               <td *ngIf="edital.categoria" placement="top" ngbTooltip="{{edital.categoria.nome}}" container="body" tooltipClass="tooltip">{{edital.categoria.nome}}</td>
+               <td *ngIf="!edital.categoria">--</td>
+
+               <td class="tdMaiorPersonalizado" *ngIf="edital.empresa && titulo == 'EDITAIS GANHOS'" placement="top" ngbTooltip="{{edital.empresa.nome}}" container="body" tooltipClass="tooltip">{{edital.empresa.nome}}</td>
+               <td *ngIf="!edital.empresa && titulo == 'EDITAIS GANHOS'">--</td>
+
+               <td>{{edital.regiao.nome}}</td>
+               <td>{{edital.estado.uf}}</td>
+
+               <td class="tdPersonalizado" placement="top" ngbTooltip="{{edital.dataHoraDeAbertura | date:'dd/MM/yyyy HH:mm'}}" container="body" tooltipClass="tooltip">{{edital.dataHoraDeAbertura | date:'dd/MM/yyyy HH:mm'}}</td>
+
+               <td *ngIf="edital.nossoValor && titulo == 'EDITAIS GANHOS'" class="tdPersonalizado" placement="top" ngbTooltip="{{edital.nossoValor  | currency : 'R$'}}" container="body" tooltipClass="tooltip">{{edital.nossoValor  | currency : 'R$'}}</td>
+               <td *ngIf="!edital.nossoValor && titulo == 'EDITAIS GANHOS'">--</td>
+
+               <td placement="top" ngbTooltip="{{edital.modalidade.nome}}" container="body" tooltipClass="tooltip">{{edital.modalidade.nome}}</td>
+               <td placement="top" ngbTooltip="{{edital.portal.nome}}" container="body" tooltipClass="tooltip">{{edital.portal.nome}}</td>
+               <td *ngIf="titulo == 'EDITAIS NOGO'" placement="top" ngbTooltip="{{edital.motivosComum.nome}}" container="body" tooltipClass="tooltip">{{edital.motivosComum.nome}}</td>
+
+               <ng-template #hoverImgTemp>
+                  <div class="comentario" *ngIf="edital.comentario">
+                     <span class="mensagem">{{edital.comentario.mensagem}}</span>
+                     <div class="dados"><span>{{edital.comentario.usuario.nome}}</span> <span>Criado: {{edital.comentario.dataCriacao | date:'dd/MM/yyyy'}}</span></div>
+                  </div>
+               </ng-template>
+               <td (click)="obterComentarios(edital.id)" placement="left" container="body" [ngbPopover]="hoverImgTemp" [triggers]="edital.comentario ? 'mouseenter:mouseleave' : ''" popoverTitle="Comentário">
+                  <i class="fa fa-comments-o fa-2x" aria-hidden="true"></i>
+               </td>
+
+               <td>
+                  <div *ngIf="edital.anexo" class="btn-group" role="group" aria-label="...">
+                     <a id="visualizar-upload" href="javascript:void(0)" (click)="downloadAnexoBD(edital.anexo)" class="btn btn-info btnAnexo" placement="top" ngbTooltip="{{edital.anexo.nome}}" container="body" tooltipClass="tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+                  </div>
+                  <a *ngIf="edital.anexo" id="download-anexo-BD" href="" download="{{ edital.anexo.nome }}"></a>
+
+               <div *ngIf="!edital.anexo" class="btn-group" role="group" aria-label="...">
+                  <a class="btn btn-info btnAnexo disabled" ><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+               </div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>

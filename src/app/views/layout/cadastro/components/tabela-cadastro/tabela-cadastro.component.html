@@ -1,0 +1,41 @@
+<div class="card cardTabela" *ngIf="dados">
+   <div class="row d-flex justify-content-between tituloTabela">
+      <div class="col-md-11 d-flex justify-content-center align-items-center">
+         {{titulo}} &nbsp; <span class="badge badge-pill badge-light">{{dados.length}}</span>
+      </div>
+   </div>
+   <div [ngClass]="{scroll: dados.length > 10}">
+      <table class="table table-striped tabelaCadastro">
+         <thead>
+            <tr>
+               <th>NOME</th>
+               <th *ngIf="tipo == 'categoria'">BU</th>
+               <th *ngIf="tipo == 'cliente' || tipo == 'concorrente'">APELIDO</th>
+               <th *ngIf="tipo == 'cliente' || tipo == 'concorrente'">CNPJ</th>
+               <th>STATUS</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let dado of dados" (click)="enviarDado(dado)">
+               <td *ngIf="dado.nome && tipo != 'preVenda'">{{dado.nome}}</td>
+               <td *ngIf="!dado.nome && tipo != 'preVenda'">--</td>
+
+               <td *ngIf="dado.usuario && tipo == 'preVenda'">{{dado.usuario.nome}}</td>
+               <td *ngIf="!dado.usuario && tipo == 'preVenda'">--</td>
+
+               <td *ngIf="tipo == 'categoria' && dado.bu">{{dado.bu.nome}}</td>
+               <td *ngIf="tipo == 'categoria' && !dado.bu">--</td>
+
+               <td *ngIf="(tipo == 'cliente' || tipo == 'concorrente') && dado.apelido">{{dado.apelido}}</td>
+               <td *ngIf="(tipo == 'cliente' || tipo == 'concorrente') && !dado.apelido">--</td>
+
+               <td *ngIf="(tipo == 'cliente' || tipo == 'concorrente') && dado.cnpj">{{dado.cnpj | mask:"00.000.000/0000-00"}}</td>
+               <td *ngIf="(tipo == 'cliente' || tipo == 'concorrente') && !dado.cnpj">--</td>
+
+               <td *ngIf="dado.ativo == true">ATIVADO</td>
+               <td *ngIf="dado.ativo == false" [ngClass]="{desativado: dado.ativo == false}">DESATIVADO</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="container-fluid" id="bloco">
+   <div class="row mb-4">
+      <div class="col-md-12">
+         <app-formulario-cadastro
+            [form]="modalidadeForm"
+            [titulo]="'Modalidade'"
+            [id]="modalidadeId"
+            (cadastrar)="cadastrarModalidade()"
+            (alterar)="alterarModalidade()"
+            (limpar)="limpar()">
+         </app-formulario-cadastro>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <app-tabela-cadastro [titulo]="'Modalidade'" [dados]="modalidades" (pegarDado)="selecionarModalidade($event)"></app-tabela-cadastro>
+      </div>
+   </div>
+</div>
+

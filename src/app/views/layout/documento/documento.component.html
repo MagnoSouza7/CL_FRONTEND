@@ -1,0 +1,129 @@
+<div class="container-fluid" id="bloco">
+   <div class="row mb-4">
+      <div class="col-md-12">
+         <form class="d-flex justify-content-center align-items-center flex-column" [formGroup]="documentoForm">
+            <div class="card my-1 py-3">
+               <legend>Cadastrar Documento</legend>
+               <hr />
+               <div class="form-row d-flex-md justify-content-around">
+                  <div class="form-group col-md-4 d-flex flex-column ">
+                     <label class="active">Descricao</label>
+                     <textarea class="form-control px-2" formControlName="descricao" required></textarea>
+                  </div>
+                  <div class="form-group col-md-2 mt-2">
+                     <div class="form-group col-md-12 d-flex justify-content-center">
+                        <app-upload [tituloBt]="'Upload Anexo'" [idBt]="'anexobt'" *ngIf="!exibirUploadCadastro" (evento)="uploadCadastro($event)"></app-upload>
+                        <div *ngIf="exibirUploadCadastro" class="btn-group" role="group" aria-label="...">
+                           <a id="visualizar-upload" href="javascript:void(0)" (click)="downloadAnexo()" class="btn btn-info btnAnexo">{{ arquivoCadastro.nome }}</a>
+                           <button type="button" class="btn btn-danger btnExcluir" (click)="excluirEdital('cadastro')">
+                              X
+                           </button>
+                        </div>
+                        <a id="download-anexo" href="" download="{{ arquivoCadastro.nome }}"></a>
+                     </div>
+                  </div>
+                  <div class="form-group d-flex justify-content-end mt-4">
+                     <div class="btn-group">
+                        <button class="btn btn-success botao" (click)="cadastrarDocumento()" [disabled]="!documentoForm.valid">Cadastrar</button>
+                        <button class="btn btn-danger botao" (click)="limpar()">Limpar</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <div class="areatabela d-flex justify-content-center align-items-center">
+            <div class="card d-flex justify-content-center align-items-center" *ngIf="documentos">
+               <div class="row d-flex justify-content-center tituloTabela backgoundGerente">
+                  Documento Cl
+               </div>
+               <div class="d-flex justify-content-center" *ngIf="!documentos">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+               </div>
+               <div id="tabeladocumento" [ngClass]="{scroll: documentos.length > 15}" style="width: 100%;" *ngIf="documentos">
+                  <table border="1" class="tabela">
+                     <thead>
+                        <tr>
+                           <th class="px-2">ID</th>
+                           <th>DESCRIÇÃO</th>
+                           <th>ANEXO</th>
+                           <th>EDITAR</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let documento of documentos">
+                           <td>{{documento.id}}</td>
+                           <td>{{documento.descricao}}</td>
+                           <td>
+                              <div class="form-row d-flex justify-content-center">
+                                 <div class="form-group col-md-12 d-flex justify-content-center">
+                                    <div *ngIf="documento.anexo" class="btn-group" role="group" aria-label="...">
+                                       <a id="visualizar-upload" href="javascript:void(0)" (click)="downloadAnexoBD(documento.anexo)" class="btn btn-info btnAnexo">{{ documento.anexo.nome }}</a>
+                                    </div>
+                                    <a *ngIf="documento.anexo" id="download-anexo-BD" href="" download="{{ documento.anexo.nome }}"></a>
+
+                                    <div *ngIf="!documento.anexo" class="btn-group" role="group" aria-label="...">
+                                       <a class="btn btn-info btnAnexo disabled" >Nenhum arquivo anexado...</a>
+                                    </div>
+                                 </div>
+                              </div>
+                           </td>
+                           <td style="height: 50px;" class="editar" (click)="abirModalDeAlteracao(longContent, documento.id)"><i style="border: none; outline: none;" class="fa fa-pencil fa-lg d-flex justify-content-center align-items-center " aria-hidden="true"></i></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Modal criado para fazer alteraçoes -->
+   <ng-template #longContent let-modal>
+      <div class="modal-header p-2">
+        <h4 class="modal-title">Alterar Consulta Publica</h4>
+        <button type="button" class="close" style="border: none; outline: none;" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body overflow-hidden">
+         <form class="d-flex flex-column" [formGroup]="documentoUpdateForm">
+            <div class="form-row py-2 d-flex justify-content-center align-items-center">
+               <div class="form-group col-md-12">
+                  <label class="active">Descricao</label>
+                  <textarea type="number" formControlName="descricao" class="form-control px-2" required></textarea>
+               </div>
+            </div>
+            <div class="form-row py-2 d-flex justify-content-center">
+               <div class="form-group col-md-10">
+                  <div class="form-group col-md-12 d-flex justify-content-center">
+                     <app-upload [tituloBt]="'Upload Anexo'" [idBt]="'anexobtupdate'" *ngIf="!exibirUploadUpdate" (evento)="uploadUpdate($event)"></app-upload>
+                     <div *ngIf="exibirUploadUpdate" class="btn-group" role="group" aria-label="...">
+                        <a id="visualizar-upload" href="javascript:void(0)" (click)="downloadAnexoUpdate()" class="btn btn-info btnAnexo">{{ arquivoUpdate.nome }}</a>
+                        <button type="button" class="btn btn-danger btnExcluir" (click)="excluirEdital('update')">
+                           X
+                        </button>
+                     </div>
+                     <a id="download-anexo-update" href="" download="{{ arquivoUpdate.nome }}"></a>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+      <div class="modal-footer p-2 d-flex justify-content-between">
+         <div class="btn-group" role="group">
+            <button (click)="deletarDocumento()" [disabled]="(user.role.nome != 'administrador' && user.role.nome != 'licitacao')" class="btn btn-danger btn-lg botao">Deletar</button>
+         </div>
+         <div class="btn-group" role="group">
+            <button (click)="alterarDocumento()" class="btn btn-success btn-lg botao" [disabled]="!documentoUpdateForm.valid">Alterar</button>
+            <button type="button" class="btn btn-warning btn-lg botao" (click)="modal.close('Close click')">Cancelar</button>
+         </div>
+      </div>
+   </ng-template>
+</div>

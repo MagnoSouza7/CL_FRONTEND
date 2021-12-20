@@ -1,0 +1,289 @@
+<div class="container-fluid pb-5">
+   <div class="row">
+      <div class="col-md-12">
+         <div class="d-flex justify-content-center listaEstados">
+            <div *ngIf="!estados" class="spinner-border text-primary" role="status">
+               <span class="sr-only">Loading...</span>
+            </div>
+            <div *ngIf="estados" class="btn-group d-flex flex-wrap" role="group">
+               <button
+                  class="btn btn-lg btn-estado bd-highlight"
+                  *ngFor="let estado of estados"
+                  (click)="consultar(estado.estado)"
+                  [ngClass]="{'btn-success': estado.ok, 'btn-danger': !estado.ok}"
+               >
+                  {{estado.estado.uf}}
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="row mt-4">
+      <div class="col-md-12">
+         <form *ngIf="dissidioEstado" class="d-flex justify-content-center align-items-center flex-column" [formGroup]="formCadastrar">
+            <div class="card cardFormulario">
+               <legend class="tituloCard tituloForm" data-toggle="collapse" href="#collapseCadastrar" role="button" aria-expanded="false" aria-controls="collapseCadastrar" (click)="toogleCard()">
+                  <span>Cadastrar novo Dissídio: {{estadoUf}}</span>
+                  <i [ngClass]="{'fa-chevron-up': !cardExpandido, 'fa-chevron-down': cardExpandido}" class="fa"></i>
+               </legend>
+               <div class="collapse" id="collapseCadastrar">
+                  <div class="form-row d-flex justify-content-between mt-3">
+                     <div class="form-group col-md-2">
+                        <label class="active">Data base</label>
+                        <input type="date" formControlName="dataBase" name="dataBase" class="form-control px-2" required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-4">
+                        <label class="active">Data última convenção ou registro no MTE</label>
+                        <input type="date" formControlName="dataUltima" name="dataUltima" class="form-control px-2" required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Piso Salarial 8hrs</label>
+                        <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" placeholder="R$ 0,00" formControlName="pisoSalarial8h" name="pisoSalarial8h" class="form-control px-2"
+                           required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Piso Salarial 6hrs</label>
+                        <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" placeholder="R$ 0,00" formControlName="pisoSalarial6h" name="pisoSalarial6h"
+                           class="form-control px-2">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                  </div>
+
+                  <div class="form-row d-flex justify-content-between mt-2">
+                     <div class="form-group col-md-3">
+                        <label class="active">Ticket 8hrs</label>
+                        <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" placeholder="R$ 0,00" formControlName="ticket8h" name="ticket8h" class="form-control px-2">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Ticket 6hrs</label>
+                        <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" placeholder="R$ 0,00" formControlName="ticket6h" name="ticket6h" class="form-control px-2">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">% Reajuste</label>
+                        <input type="text" formControlName="reajuste" currencyMask [options]="{ prefix: '', suffix : '%', thousands: '.', decimal: ',', align: 'left' }" placeholder="0%" name="reajuste" class="form-control px-2">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Benef. Indiretos 8hrs</label>
+                        <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" placeholder="R$ 0,00" formControlName="benefInd8h" name="benefInd8h" class="form-control px-2">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                  </div>
+
+                  <div class="form-row d-flex justify-content-between mt-2">
+                     <div class="form-group col-md-3">
+                        <label class="active">Benef. Indiretos 6hrs</label>
+                        <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left' }" placeholder="R$ 0,00" formControlName="benefInd6h" name="benefInd6h" class="form-control px-2">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Observações</label>
+                        <input type="text" formControlName="observacoes" name="observacoes" class="form-control px-2" required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">CNPJ</label>
+                        <input mask="00.000.000/0000-00" type="text" formControlName="cnpj" name="cnpj" class="form-control px-2">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-2">
+                        <label class="active">Vigência Inicio</label>
+                        <input type="date" formControlName="vigenciainicio" name="vigenciainicio" class="form-control px-2"
+                           required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                  </div>
+
+                  <div class="form-row d-flex justify-content-between mt-2">
+                     <div class="form-group col-md-2">
+                        <label class="active">Vigência Fim</label>
+                        <input type="date" formControlName="vigenciafim" name="vigenciafim" class="form-control px-2"
+                           required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Conforme cargo funcão</label>
+                        <input type="text" formControlName="conformeCargoFuncao" name="conformeCargoFuncao"
+                           class="form-control px-2" required>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Atalho</label>
+                        <input type="text" formControlName="atalho" name="atalho" class="form-control px-2">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-4 d-flex justify-content-center mt-3">
+                        <app-upload *ngIf="!exibirUpload" [tituloBt]="'Anexar Dissídio'" [idBt]="'anexobt'" (evento)="upload($event, 0)"></app-upload>
+
+                        <div *ngIf="exibirUpload" class="btn-group" role="group" aria-label="...">
+                           <a id="visualizar-upload" href="javascript:void(0)" (click)="downloadAnexo(0)"
+                              class="btn btn-info btnAnexo">{{ arquivo.nome }}</a>
+                           <button type="button" class="btn btn-danger btnExcluir" (click)="excluirEdital(0)">
+                              X
+                           </button>
+                        </div>
+                        <a id="download-anexo" href="" download=""></a>
+                     </div>
+                  </div>
+
+                  <div class="form-row mt-2">
+                     <div class="form-group col-md-12 d-flex justify-content-end mt-3">
+                        <div class="btn-group">
+                           <button (click)="cadastrar()" [disabled]="formCadastrar.invalid" class="btn btn-success btn-lg botao">Cadastrar</button>
+                           <button (click)="limpar()" class="btn btn-danger btn-lg botao">Limpar</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <div class="row mt-4">
+      <div class="col-md-12">
+         <div *ngIf="dissidio && ocultarDissidio" class="d-flex justify-content-center align-items-center flex-column">
+            <div class="card cardFormDissidio">
+               <div class="w-100 d-flex justify-content-end pb-2">
+                  <i (click)="fecharDissidio()" class="fa fa-times fa-lg fechar" aria-hidden="true"></i>
+               </div>
+               <div class="d-flex justify-content-between mb-3">
+                  <legend class="tituloCard tituloDissidio">Dissídio: {{estadoUf}}</legend>
+                  <div class="btn-group">
+                     <button *ngIf="!editarDissidio" (click)="dissidioeditar()" class="btn btn-primary btnEditar">Editar Dissidio</button>
+                     <button *ngIf="editarDissidio" (click)="dissidioeditar()" class="btn btn-success btnEditar">Concluir edição</button>
+                     <button *ngIf="editarDissidio" (click)="cancelarEditar()" class="btn btn-danger btnEditar">Cancelar edição</button>
+                  </div>
+               </div>
+               <div class="form-row d-flex justify-content-between">
+                  <form class="form-group col-md-6" [formGroup]="formDissidio">
+                     <div *ngIf="dissidio.dataBase || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Data base:</span>
+                        <input type="date" [readOnly]="!editarDissidio" class="form-control itemInput" formControlName="dataBase">
+                     </div>
+                     <div *ngIf="dissidio.dataUltima || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Data última convenção ou registro no MTE:</span>
+                        <input type="date" [readOnly]="!editarDissidio" class="form-control itemInput" formControlName="dataUltima">
+                     </div>
+                     <div *ngIf="dissidio.pisoSalarial8h || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Piso Salarial 8hrs:</span>
+                        <input type="text" [readOnly]="!editarDissidio" class="form-control itemInput" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'center' }" placeholder="R$ 0,00" formControlName="pisoSalarial8h">
+                     </div>
+                     <div *ngIf="dissidio.pisoSalarial6h || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Piso Salarial 6hrs:</span>
+                        <input type="text" [readOnly]="!editarDissidio" class="form-control itemInput " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'center' }" placeholder="R$ 0,00" formControlName="pisoSalarial6h">
+                     </div>
+                     <div *ngIf="dissidio.ticket8h || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Ticket 8hrs:</span>
+                        <input type="text" [readOnly]="!editarDissidio" class="form-control itemInput " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'center' }" placeholder="R$ 0,00" formControlName="ticket8h">
+                     </div>
+                     <div *ngIf="dissidio.ticket6h || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Ticket 6hrs:</span>
+                        <input type="text" [readOnly]="!editarDissidio" class="form-control itemInput " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'center' }" placeholder="R$ 0,00" formControlName="ticket6h">
+                     </div>
+                     <div *ngIf="dissidio.reajuste || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">% de Reajuste:</span>
+                        <input type="text" [readOnly]="!editarDissidio" class="form-control itemInput " currencyMask [options]="{ prefix: '', suffix : '%', thousands: '.', decimal: ',', align: 'center' }" placeholder="0%" formControlName="reajuste">
+                     </div>
+                     <div *ngIf="dissidio.benefInd8h || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Benef. Indiretos 8hrs:</span>
+                        <input type="text" [readOnly]="!editarDissidio" class="form-control itemInput " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'center' }" placeholder="R$ 0,00" formControlName="benefInd8h">
+                     </div>
+                     <div *ngIf="dissidio.benefInd6h || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Benef. Indiretos 6hrs:</span>
+                        <input type="text" [readOnly]="!editarDissidio" class="form-control itemInput " currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'center' }" placeholder="R$ 0,00" formControlName="benefInd6h">
+                     </div>
+                     <div *ngIf="dissidio.observacoes || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Observações:</span>
+                        <textarea class="form-control itemTextArea" [readOnly]="!editarDissidio" rows="3" formControlName="observacoes"></textarea>
+                     </div>
+                     <div *ngIf="dissidio.cnpj || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">CNPJ:</span>
+                        <input mask="00.000.000/0000-00" type="text" [readOnly]="!editarDissidio" class="form-control itemInput " formControlName="cnpj">
+                     </div>
+                     <div *ngIf="dissidio.vigenciaInicio || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Vigência inicio:</span>
+                        <input type="date" [readOnly]="!editarDissidio" class="form-control itemInput " formControlName="vigenciainicio">
+                     </div>
+                     <div *ngIf="dissidio.vigenciaFinal || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Vigência fim:</span>
+                        <input type="date" [readOnly]="!editarDissidio" class="form-control itemInput " formControlName="vigenciafim">
+                     </div>
+                     <div *ngIf="dissidio.conformeCargoFuncao || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Conforme cargo funcão:</span>
+                        <textarea class="form-control itemTextArea" [readOnly]="!editarDissidio" rows="3" formControlName="conformeCargoFuncao"></textarea>
+                     </div>
+                     <div *ngIf="dissidio.atalho || editarDissidio" class="form-group itemDissidio">
+                        <span class="item">Atalho:</span>
+                        <input type="text" [readOnly]="!editarDissidio" class="form-control itemInput " formControlName="atalho">
+                     </div>
+                  </form>
+
+                  <div *ngIf="!editarDissidio" class="form-group col-md-6">
+                     <ngx-extended-pdf-viewer
+                        *ngIf="dissidio.arquivo && (dissidio.arquivo.tipo.includes('pdf') || dissidio.arquivo.tipo.includes('Pdf') || dissidio.arquivo.tipo.includes('PDF'))"
+                        [base64Src]="dissidio.arquivo.base64" backgroundColor="#ffffff" [height]="'600px'"
+                        [useBrowserLocale]="true" [handTool]="false" [showHandToolButton]="true"
+                        [showOpenFileButton]="false">
+                     </ngx-extended-pdf-viewer>
+
+                     <span *ngIf="dissidio.arquivo && (!dissidio.arquivo.tipo.includes('pdf') && !dissidio.arquivo.tipo.includes('Pdf') && !dissidio.arquivo.tipo.includes('PDF'))">
+                        <div class="d-flex justify-content-center listaEstadosTopo">Não é possivel renderizar o arquivo</div>
+                     </span>
+
+                     <span *ngIf="!dissidio.arquivo">
+                        <div class="d-flex justify-content-center listaEstadosTopo">Não foi anexado o documento do dissídio.</div>
+                     </span>
+                  </div>
+
+                  <div *ngIf="editarDissidio" class="form-group col-md-6">
+                     <div class="form-row d-flex justify-content-center">
+                        <div class="form-group col-md-12 d-flex justify-content-center">
+                           <app-upload [tituloBt]="'Anexar Dissídio'" [idBt]="'anexoUpdatebt'" *ngIf="!exibirUploadUpdate" (evento)="upload($event, 1)"></app-upload>
+                           <div *ngIf="exibirUploadUpdate" class="btn-group" role="group" aria-label="...">
+                              <a id="visualizar-upload" href="javascript:void(0)" (click)="downloadAnexo(1)"
+                                 class="btn btn-info btnAnexo">{{ arquivoUpdate.nome }}</a>
+                              <button type="button" class="btn btn-danger btnExcluir" (click)="excluirEdital(1)">
+                                 X
+                              </button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="row mt-4">
+      <div class="col-md-12 d-flex justify-content-center">
+         <div *ngIf="dissidioEstado && dissidioEstado.length > 0" class="card cardHistorico">
+            <div class="w-100 d-flex justify-content-start">
+               <legend class="tituloCard tituloHistorico">Historico - {{estadoUf}}</legend>
+            </div>
+            <div class="d-flex flex-wrap cardInterno" [ngClass]="{scroll: dissidioEstado.length > 30}">
+               <div
+                  *ngFor="let dissidioRestante of dissidioEstado"
+                  (click)="obterDissidioById(dissidioRestante)"
+                  [ngClass]="{
+                     'fundoverde' : (dissidioRestante.vigencia == 0),
+                     'fundovermelho' : (dissidioRestante.vigencia == -1),
+                     'fundolaranja' : (dissidioRestante.vigencia == 1)}"
+                  class="dissidiosCard card bd-highlight"
+                  id="card{{dissidioRestante.id}}">
+                  <span>Data base</span>
+                  <span>{{dissidioRestante.dataBase  | date:'dd/MM/yyyy'}}</span>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

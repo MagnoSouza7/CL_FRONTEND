@@ -1,0 +1,21 @@
+<div class="container-fluid" id="bloco">
+   <div class="row mb-4">
+      <div class="col-md-12">
+         <app-formulario-cadastro
+            [form]="motivoComumForm"
+            [titulo]="'Motivo Comum'"
+            [id]="motivoComumId"
+            (cadastrar)="cadastrarMotivoComum()"
+            (alterar)="alterarMotivoComum()"
+            (limpar)="limpar()">
+         </app-formulario-cadastro>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <app-tabela-cadastro [titulo]="'Motivos Comuns'" [dados]="motivosComum" (pegarDado)="selecionarMotivoComum($event)"></app-tabela-cadastro>
+      </div>
+   </div>
+</div>
+

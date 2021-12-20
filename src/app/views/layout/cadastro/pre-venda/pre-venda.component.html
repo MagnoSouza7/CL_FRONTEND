@@ -1,0 +1,22 @@
+<div class="container-fluid">
+   <div class="row mb-4">
+      <div class="col-md-12">
+         <app-formulario-cadastro
+            [form]="preVendaForm"
+            [titulo]="'Pré Venda'"
+            [id]="preVendaId"
+            [dados]="dadosForm"
+            [tipo]="'preVenda'"
+            (cadastrar)="cadastrarPreVenda()"
+            (alterar)="alterarPreVenda()"
+            (limpar)="limpar()">
+         </app-formulario-cadastro>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <app-tabela-cadastro [titulo]="'Pré Venda'" [tipo]="'preVenda'" [dados]="preVendas" (pegarDado)="selecionarPreVenda($event)"></app-tabela-cadastro>
+      </div>
+   </div>
+</div>

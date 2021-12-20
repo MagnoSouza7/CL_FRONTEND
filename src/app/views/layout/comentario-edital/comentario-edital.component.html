@@ -1,0 +1,35 @@
+<div class="container-fluid">
+   <div class="row">
+      <div class="tituloComponente">
+         <h3>Comentário</h3>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-12 d-flex justify-content-center align-items-center">
+         <div class="card cardComentario">
+            <div class="mensagem scroll">
+               <div class="cardMensagem" *ngFor="let comentario of dadosComentarios">
+                  <div class="excluir" *ngIf="user.role.nome == 'administrador' || user.role.nome == 'licitacao'">
+                     <i (click)="excluirComentario(comentario.id)" class="fa fa-times fa-lg" aria-hidden="true"></i>
+                  </div>
+                  <div class="texto">
+                     <p>{{comentario.mensagem}}</p>
+                  </div>
+                  <span class="origem">
+                     <p>{{comentario.usuario.nome}}</p>
+                     <p>Criado: {{comentario.dataCriacao | date:'dd/MM/yyyy'}}</p>
+                  </span>
+               </div>
+            </div>
+            <div class="textoMensagem">
+               <form class="formulario" [formGroup]="comentarioForm">
+                  <div style="width: 100%;" class="">
+                     <input type="text" class="textoDigitado" (keyup)="cadastrarEnter($event)" placeholder="Digite seu comentário" formControlName="mensagem" required/>
+                  </div>
+                  <button class="btn btn-success btnEnviar"(click)="cadastrarComentario()">CRIAR</button>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

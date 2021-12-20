@@ -1,0 +1,160 @@
+.borda {
+   border: 1px solid black;
+}
+
+i{
+   cursor: pointer;
+}
+
+.cardTabela{
+   width: 90vw;
+   max-height: 600px;
+   padding: 20px;
+   box-shadow: 0 8px 14px -6px black;
+}
+
+.tituloTabela{
+   color: #ffffff;
+   margin: 0px 2px;
+}
+
+.tabelaParecer{
+   width: 100%;
+   overflow-x: hidden;
+}
+
+.tabelaParecer thead tr th{
+   font-size: 12px;
+   line-height: 16px;
+   text-align: center;
+}
+
+.tabelaParecer thead tr .popUp{
+   cursor: pointer;
+}
+
+.tabelaParecer thead tr .popUp:hover{
+   background-color: #dcdcdc;
+}
+
+.tabelaParecer tbody tr:hover{
+   background-color: #575757;
+   color: #e3e0d6;
+   cursor: pointer;
+}
+
+.tabelaParecer tbody tr td{
+   font-size: 12px;
+   max-width: 90px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   text-align: center;
+   text-transform: uppercase;
+}
+
+.tabelaParecer tbody tr .tdPersonalizado{
+   font-size: 12px;
+   max-width: 120px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
+.comentario{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.dados{
+   width: 100%;
+   font-size: 10px;
+   font-weight: bold;
+   display: flex;
+   justify-content: space-between;
+   text-transform: uppercase;
+   border-top: 1px solid rgb(201, 201, 201);
+   padding-top: 4px;
+   margin-top: 4px;
+}
+
+.dados span:nth-child(1){
+   max-width: 90px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
+.corGerente {
+   background-color: mediumpurple;
+}
+
+.corDiretor {
+   background-color: rgb(35, 137, 233);
+}
+
+.corLicitacao {
+   background-color: rgb(34, 161, 66);
+}
+
+.corAcompanhar {
+   background-color: rgb(236, 146, 0);
+}
+
+.corPerda{
+   background-color: rgb(66, 66, 66);
+}
+
+/* estilo do scroll da tabela */
+.scroll {
+   overflow-y: scroll;
+}
+
+.scroll::-webkit-scrollbar {
+   width: 10px;
+   background: #e3e0d6;
+   border-radius: 10px;
+   height: 10px;
+}
+
+.scroll::-webkit-scrollbar-track {
+   background: rgba(0, 0, 0, 0.1);
+}
+
+.scroll::-webkit-scrollbar-thumb {
+   background: #8b8778;
+   border-radius: 10px;
+}
+.btnAnexo {
+   width: 35px;
+   height: 35px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 4px 4px;
+   font-size: 10pt;
+}
+
+@media(max-width: 1194px){
+   .scrollX{
+      overflow-x: scroll;
+   }
+
+   .scrollX::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+      background: #e3e0d6;
+      border-radius: 10px;
+   }
+
+   .scrollX::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+   }
+
+   .scrollX::-webkit-scrollbar-thumb {
+      background: #8b8778;
+      border-radius: 10px;
+   }
+
+}

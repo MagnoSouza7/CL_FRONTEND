@@ -1,0 +1,92 @@
+.borda {
+   border: 1px solid black;
+}
+
+.cardTabela{
+   width: 80vw;
+   max-height: 600px;
+   padding: 20px;
+   box-shadow: 0 8px 14px -6px black;
+}
+
+.tituloTabela{
+   color: #ffffff;
+   margin: 0px 2px;
+   background-color: mediumpurple;
+}
+
+.tabelaCadastro{
+   width: 100%;
+   overflow-x: hidden;
+}
+
+.tabelaCadastro thead tr th{
+   font-size: 12px;
+   line-height: 16px;
+   text-align: center;
+}
+
+.tabelaCadastro tbody tr:hover{
+   background-color: #575757;
+   color: #e3e0d6;
+   cursor: pointer;
+}
+
+.tabelaCadastro tbody tr td{
+   font-size: 12px;
+   max-width: 90px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   text-transform: uppercase;
+   font-weight: 500;
+}
+
+.tabelaCadastro tbody tr td:nth-child(2){
+   text-align: center;
+}
+
+.tabelaCadastro tbody tr td:nth-child(3){
+   text-align: center;
+}
+
+.tabelaCadastro tbody tr td:last-child{
+   text-align: center;
+}
+
+.tabelaCadastro tbody tr .tdPersonalizado{
+   font-size: 12px;
+   max-width: 120px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
+.desativado{
+   color: red;
+}
+
+.tabelaCadastro tbody tr:hover .desativado{
+   color: rgb(255, 94, 94);
+}
+
+/* estilo do scroll da tabela */
+.scroll {
+   overflow-y: scroll;
+}
+
+.scroll::-webkit-scrollbar {
+   width: 10px;
+   background: #e3e0d6;
+   border-radius: 10px;
+   height: 10px;
+}
+
+.scroll::-webkit-scrollbar-track {
+   background: rgba(0, 0, 0, 0.1);
+}
+
+.scroll::-webkit-scrollbar-thumb {
+   background: #8b8778;
+   border-radius: 10px;
+}

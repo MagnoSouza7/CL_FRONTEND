@@ -1,0 +1,308 @@
+<div class="container-fluid">
+   <div class="row mb-4">
+      <div class="nameComponent mb-4">
+         <h3>Consulta Publica /Credenciamento</h3>
+      </div>
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <div class="card my-1 py-3" >
+            <nav ngbNav #nav="ngbNav" class="nav-tabs">
+               <ng-container ngbNavItem>
+                  <a ngbNavLink class="navAba">Cadastro</a>
+                  <ng-template ngbNavContent>
+                     <form class="d-flex justify-content-center align-items-center flex-column" [formGroup]="consultaPublicaForm" *ngIf="dadosForm">
+                        <div class="blockForm mx-5 mt-2 px-3 py-2">
+                           <div class="form-row d-flex justify-content-between">
+                              <div class="form-group col-md-2">
+                                 <label class="active">Nº da Consulta</label>
+                                 <input type="number" formControlName="numeroConsulta" class="form-control px-2">
+                              </div>
+                              <div class="form-group col-md-4">
+                                 <label class="active">Nome do Cliente</label>
+                                 <select formControlName="nomeCliente" class="form-control px-2" required>
+                                    <option value="" [disabled]="true" [selected]="true">--Selecione--</option>
+                                    <option value={{dados.id}} *ngFor="let dados of dadosForm.cliente">{{dados.nome}}</option>
+                                 </select>
+                              </div>
+                              <div class="form-group col-md-4">
+                                 <label class="active">Nome da Empresa</label>
+                                 <select formControlName="nomeEmpresa" class="form-control px-2" required>
+                                    <option value="" [disabled]="true" [selected]="true">--Selecione--</option>
+                                    <option value={{dados.id}} *ngFor="let dados of dadosForm.empresa">{{dados.nome}}</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="form-row d-flex justify-content-between mt-2 mr-1">
+                              <div class="form-group col-md-2">
+                                 <label class="active">Data Resposta</label>
+                                 <input type="date" formControlName="dataResposta" class="form-control px-2" required>
+                              </div>
+                              <div class="form-group col-md-2">
+                                 <label class="active">Hora Resposta</label>
+                                 <input type="time" formControlName="horaResposta" class="form-control px-2" required>
+                              </div>
+                              <div class="form-group col-md-3">
+                                 <label class="active">Objeto</label>
+                                 <input type="text" formControlName="objeto" class="form-control px-2">
+                              </div>
+                              <div class="form-group col-md-2 mt-2">
+                                 <div class="form-group col-md-12 d-flex justify-content-center">
+                                    <app-upload [tituloBt]="'Upload Anexo'" [idBt]="'anexobt'" *ngIf="!exibirUploadCadastro" (evento)="uploadCadastro($event)"></app-upload>
+                                    <div *ngIf="exibirUploadCadastro" class="btn-group" role="group" aria-label="...">
+                                       <a id="visualizar-upload" href="javascript:void(0)" (click)="downloadAnexo()" class="btn btn-info btnAnexo">{{ arquivoCadastro.nome }}</a>
+                                       <button type="button" class="btn btn-danger btnExcluir" (click)="excluirEdital('cadastro')">
+                                          X
+                                       </button>
+                                    </div>
+                                    <a id="download-anexo" href="" download="{{ arquivoCadastro.nome }}"></a>
+                                 </div>
+                              </div>
+                              <div class="form-group col-md-2 mt-2">
+                                 <div class="btn-group" role="group">
+                                    <button (click)="cadastrar()" class="btn btn-success btn-lg botao" [disabled]="!consultaPublicaForm.valid">Cadastrar</button>
+                                    <button (click)="limpar()" class="btn btn-warning btn-lg botao">Limpar</button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </ng-template>
+               </ng-container>
+               <ng-container ngbNavItem>
+                  <a ngbNavLink class="navAba">Filtro</a>
+                  <ng-template ngbNavContent>
+                     <form class="d-flex justify-content-center align-items-center flex-column" [formGroup]="consultaPublicaFiltroForm" *ngIf="dadosForm">
+                        <div class="blockForm mx-5 mt-2 px-3 py-2">
+                           <div class="form-row d-flex justify-content-between">
+                              <div class="form-group col-md-2">
+                                 <label class="active">Nº da Consulta</label>
+                                 <input type="number" formControlName="numeroConsulta" class="form-control px-2">
+                              </div>
+                              <div class="form-group col-md-4">
+                                 <label class="active">Nome do Cliente</label>
+                                 <select formControlName="nomeCliente" class="form-control px-2">
+                                    <option value="">--Selecione--</option>
+                                    <option value={{dados.id}} *ngFor="let dados of dadosForm.cliente">{{dados.nome}}</option>
+                                 </select>
+                              </div>
+                              <div class="form-group col-md-4">
+                                 <label class="active">Nome da Empresa</label>
+                                 <select formControlName="nomeEmpresa" class="form-control px-2">
+                                    <option value="">--Selecione--</option>
+                                    <option value={{dados.id}} *ngFor="let dados of dadosForm.empresa">{{dados.nome}}</option>
+                                 </select>
+                              </div>
+                           </div>
+                           <div class="form-row pt-2">
+                              <div class="form-group col-md-2">
+                                 <label class="active">Data Resposta Inicio</label>
+                                 <input type="date" formControlName="dataRespostaInicio" class="form-control px-2">
+                              </div>
+                              <div class="form-group col-md-2">
+                                 <label class="active">Data Resposta Final</label>
+                                 <input type="date" formControlName="dataRespostaFinal" class="form-control px-2">
+                              </div>
+                              <div class="form-group col-md-8 d-flex justify-content-end align-items-center">
+                                 <div class="btn-group" role="group">
+                                    <button (click)="filtrar()" class="btn btn-info btn-lg botao">Filtrar</button>
+                                    <button (click)="limpar()" class="btn btn-warning btn-lg botao">Limpar</button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </ng-template>
+               </ng-container>
+            </nav>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+         </div>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <div class="areatabela">
+            <div class="card d-flex justify-content-center align-items-center" *ngIf="consultaPublicaAtivo">
+               <div class="row d-flex justify-content-center tituloTabela backgoundGerente">
+                  Consulta Publica Ativo
+               </div>
+               <div class="d-flex justify-content-center" *ngIf="!consultaPublicaAtivo">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+               </div>
+               <div id="tabelaConsultaPublica" [ngClass]="{scroll: consultaPublicaAtivo.length > 10}" style="width: 100%;" *ngIf="consultaPublicaAtivo">
+                  <table class="table table-striped tabelaConsultaPublica">
+                     <thead>
+                        <tr>
+                           <th>Nº DA CONSULTA</th>
+                           <th>NOME DO CLIENTE</th>
+                           <th>OBJETO</th>
+                           <th>NOME DA EMPRESA</th>
+                           <th>DATA RESPOSTA</th>
+                           <th>ANEXO</th>
+                           <th>EDITAR</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let consulta of consultaPublicaAtivo">
+                           <td>{{consulta.numConsulta}}</td>
+                           <td placement="top" ngbTooltip="{{consulta.cliente.nome}}" container="body" tooltipClass="tooltip">{{consulta.cliente.nome}}</td>
+                           <td placement="top" ngbTooltip="{{consulta.objeto}}" container="body" tooltipClass="tooltip">{{consulta.objeto}}</td>
+                           <td placement="top" ngbTooltip="{{consulta.empresa.nome}}" container="body" tooltipClass="tooltip">{{consulta.empresa.nome}}</td>
+                           <td placement="top" ngbTooltip="{{consulta.dataResposta | date: 'dd/MM/yyyy HH:mm'}}" container="body" tooltipClass="tooltip">{{consulta.dataResposta | date: 'dd/MM/yyyy HH:mm'}}</td>
+                           <td>
+                              <div class="form-row d-flex justify-content-center">
+                                 <div class="form-group col-md-12 d-flex justify-content-center">
+                                    <div *ngIf="consulta.anexo" class="btn-group" role="group" aria-label="...">
+                                       <a id="visualizar-upload" href="javascript:void(0)" (click)="downloadAnexoBD(consulta.anexo)" class="btn btn-info btnAnexo" placement="top" ngbTooltip="{{consulta.anexo.nome}}" container="body" tooltipClass="tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+                                    </div>
+                                    <a *ngIf="consulta.anexo" id="download-anexo-BD" href="" download="{{ consulta.anexo.nome }}"></a>
+
+                                    <div *ngIf="!consulta.anexo" class="btn-group" role="group" aria-label="...">
+                                       <a class="btn btn-info btnAnexo disabled" ><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                    </div>
+                                 </div>
+                              </div>
+                           </td>
+                           <td class="editar" (click)="abirModalDeAlteracao(longContent, consulta.id)"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+   <div class="row mt-3">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <div class="areatabela">
+            <div class="card d-flex justify-content-center align-items-center" *ngIf="consultaPublicaDesativada">
+               <div class="row d-flex justify-content-center tituloTabelaRed backgoundGerente">
+                  Consulta Publica
+               </div>
+               <div class="d-flex justify-content-center" *ngIf="!consultaPublicaDesativada">
+                  <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+               </div>
+               <div id="tabelaConsultaPublica" [ngClass]="{scroll: consultaPublicaDesativada.length > 10}" style="width: 100%;" *ngIf="consultaPublicaDesativada">
+                  <table class="table table-striped tabelaConsultaPublica">
+                     <thead>
+                        <tr>
+                           <th>Nº DA CONSULTA</th>
+                           <th>NOME DO CLIENTE</th>
+                           <th>OBJETO</th>
+                           <th>NOME DA EMPRESA</th>
+                           <th>DATA RESPOSTA</th>
+                           <th>ANEXO</th>
+                           <th>EDITAR</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let consulta of consultaPublicaDesativada">
+                           <td>{{consulta.numConsulta}}</td>
+                           <td placement="top" ngbTooltip="{{consulta.cliente.nome}}" container="body" tooltipClass="tooltip">{{consulta.cliente.nome}}</td>
+                           <td placement="top" ngbTooltip="{{consulta.objeto}}" container="body" tooltipClass="tooltip">{{consulta.objeto}}</td>
+                           <td placement="top" ngbTooltip="{{consulta.empresa.nome}}" container="body" tooltipClass="tooltip">{{consulta.empresa.nome}}</td>
+                           <td placement="top" ngbTooltip="{{consulta.dataResposta | date: 'dd/MM/yyyy HH:mm'}}" container="body" tooltipClass="tooltip">{{consulta.dataResposta | date: 'dd/MM/yyyy HH:mm'}}</td>
+                           <td>
+                              <div class="form-row d-flex justify-content-center">
+                                 <div class="form-group col-md-12 d-flex justify-content-center">
+                                    <div *ngIf="consulta.anexo" class="btn-group" role="group" aria-label="...">
+                                       <a id="visualizar-upload" href="javascript:void(0)" (click)="downloadAnexoBD(consulta.anexo)" class="btn btn-info btnAnexo" placement="top" ngbTooltip="{{consulta.anexo.nome}}" container="body" tooltipClass="tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
+                                    </div>
+                                    <a *ngIf="consulta.anexo" id="download-anexo-BD" href="" download="{{ consulta.anexo.nome }}"></a>
+
+                                    <div *ngIf="!consulta.anexo" class="btn-group" role="group" aria-label="...">
+                                       <a class="btn btn-info btnAnexo disabled" ><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a>
+                                    </div>
+                                 </div>
+                              </div>
+                           </td>
+                           <td class="editar" (click)="abirModalDeAlteracao(longContent, consulta.id)"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Modal criado para fazer alteraçoes -->
+   <ng-template #longContent let-modal>
+      <div class="modal-header p-2">
+         <h4 class="modal-title">Alterar Consulta Publica</h4>
+         <button type="button" class="close" style="border: none; outline: none;" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+         </button>
+      </div>
+      <div class="modal-body overflow-hidden">
+         <form class="d-flex flex-column" [formGroup]="consultaPublicaUpdateForm" *ngIf="dadosForm">
+            <div class="form-row py-2 d-flex justify-content-center align-items-center">
+               <div class="form-group col-md-5">
+                  <label class="active">Nº da Consulta</label>
+                  <input type="number" formControlName="numeroConsulta" class="form-control px-2" required>
+               </div>
+               <div class="form-group col-md-5">
+                  <label class="active">Data Resposta</label>
+                  <input type="date" formControlName="dataResposta" class="form-control px-2" required>
+               </div>
+               <div class="form-group col-md-5">
+                  <label class="active">Hora Resposta</label>
+                  <input type="time" formControlName="horaResposta" class="form-control px-2" required>
+               </div>
+            </div>
+            <div class="form-row py-2 d-flex justify-content-center align-items-center">
+               <div class="form-group col-md-10">
+                  <label class="active">Nome do Cliente</label>
+                  <select formControlName="nomeCliente" class="form-control px-2" required>
+                     <option value={{dados.id}} *ngFor="let dados of dadosForm.cliente">{{dados.nome}}</option>
+                  </select>
+               </div>
+            </div>
+            <div class="form-row py-2 d-flex justify-content-center align-items-center">
+               <div class="form-group col-md-10">
+                  <label class="active">Objeto</label>
+                  <input type="text" formControlName="objeto" class="form-control px-2">
+               </div>
+            </div>
+            <div class="form-row py-2 d-flex justify-content-center align-items-center">
+               <div class="form-group col-md-10">
+                  <label class="active">Nome da Empresa</label>
+                  <select formControlName="nomeEmpresa" class="form-control px-2" required>
+                     <option value={{dados.id}} *ngFor="let dados of dadosForm.empresa">{{dados.nome}}</option>
+                  </select>
+               </div>
+            </div>
+            <div class="form-row py-2 d-flex justify-content-center">
+               <div class="form-group col-md-10">
+                  <div class="form-group col-md-12 d-flex justify-content-center">
+                     <app-upload [tituloBt]="'Upload Anexo'" [idBt]="'anexobtupdate'" *ngIf="!exibirUploadUpdate" (evento)="uploadUpdate($event)"></app-upload>
+                     <div *ngIf="exibirUploadUpdate" class="btn-group" role="group" aria-label="...">
+                        <a id="visualizar-upload" href="javascript:void(0)" (click)="downloadAnexoUpdate()" class="btn btn-info btnAnexo">{{ arquivoUpdate.nome }}</a>
+                        <button type="button" class="btn btn-danger btnExcluir" (click)="excluirEdital('update')">
+                           X
+                        </button>
+                     </div>
+                     <a id="download-anexo-update" href="" download="{{ arquivoUpdate.nome }}"></a>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+      <div class="modal-footer p-2 d-flex justify-content-between">
+         <div class="btn-group" role="group">
+            <button (click)="deletarConsultaPublica()" [disabled]="(user.role.nome != 'administrador' && user.role.nome != 'licitacao')" class="btn btn-danger btn-lg botao">Deletar</button>
+         </div>
+         <div class="btn-group" role="group">
+            <button (click)="alterarConsultaPublica()" class="btn btn-success btn-lg botao" [disabled]="!consultaPublicaUpdateForm.valid">Alterar</button>
+            <button type="button" class="btn btn-warning btn-lg botao" (click)="modal.close('Close click')">Cancelar</button>
+         </div>
+      </div>
+   </ng-template>
+</div>
+
+

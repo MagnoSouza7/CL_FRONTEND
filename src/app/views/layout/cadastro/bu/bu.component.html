@@ -1,0 +1,20 @@
+<div class="container-fluid">
+   <div class="row mb-4">
+      <div class="col-md-12">
+         <app-formulario-cadastro
+            [form]="buForm"
+            [titulo]="'Bu'"
+            [id]="buId"
+            (cadastrar)="cadastrarBu()"
+            (alterar)="alterarBu()"
+            (limpar)="limpar()">
+         </app-formulario-cadastro>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <app-tabela-cadastro [titulo]="'Bus'" [dados]="bus" (pegarDado)="selecionarBu($event)"></app-tabela-cadastro>
+      </div>
+   </div>
+</div>

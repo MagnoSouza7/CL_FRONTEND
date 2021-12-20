@@ -1,0 +1,253 @@
+<div class="container-flex">
+   <div class="row">
+      <div class="col-md-12 px-2 d-flex justify-content-around align-items-center">
+         <div class="cardPainel">
+            <app-painel *ngIf="totalEditalGanhos" (click)="consultarTabelaPainel('ganhos')" [titulo]="'TOTAL DE EDITAIS GANHOS'" [tipo]="'totaleditalganho'" [conteudo]="totalEditalGanhos.length"></app-painel>
+            <div *ngIf="!totalEditalGanhos" class="spinner-border text-primary" role="status">
+               <span class="sr-only">Loading...</span>
+            </div>
+         </div>
+         <div class="cardPainel">
+            <app-painel *ngIf="totalEditalPerda" (click)="consultarTabelaPainel('perda')" [titulo]="'TOTAL DE EDITAIS PERDAS'" [tipo]="'totaleditalperda'" [conteudo]="totalEditalPerda.length"></app-painel>
+            <div *ngIf="!totalEditalPerda" class="spinner-border text-primary" role="status">
+               <span class="sr-only">Loading...</span>
+            </div>
+         </div>
+         <div class="cardPainel">
+            <app-painel *ngIf="totalEdital" (click)="consultarTabelaPainel('total')" [titulo]="'TOTAL DE EDITAIS CADASTRADOS'" [tipo]="'totaledital'" [conteudo]="totalEdital.length"></app-painel>
+            <div *ngIf="!totalEdital" class="spinner-border text-primary" role="status">
+               <span class="sr-only">Loading...</span>
+            </div>
+         </div>
+         <div class="cardPainel">
+            <app-painel *ngIf="totalEditalGo" (click)="consultarTabelaPainel('go')" [titulo]="'TOTAL DE EDITAIS (GO)'" [tipo]="'totaleditalgo'" [conteudo]="totalEditalGo.length"></app-painel>
+            <div *ngIf="!totalEditalGo" class="spinner-border text-primary" role="status">
+               <span class="sr-only">Loading...</span>
+            </div>
+         </div>
+         <div class="cardPainel">
+            <app-painel *ngIf="totalEditalNoGo" (click)="consultarTabelaPainel('nogo')" [titulo]="'TOTAL DE EDITAIS (NOGO)'" [tipo]="'totaleditalnogo'" [conteudo]="totalEditalNoGo.length"></app-painel>
+            <div *ngIf="!totalEditalNoGo" class="spinner-border text-primary" role="status">
+               <span class="sr-only">Loading...</span>
+            </div>
+         </div>
+         <div class="cardPainel">
+            <app-painel *ngIf="totalEditalSuspenso" (click)="consultarTabelaPainel('suspenso')" [titulo]="'TOTAL DE EDITAIS SUSPENSOS'" [tipo]="'totalsuspenso'" [conteudo]="totalEditalSuspenso.length"></app-painel>
+            <div *ngIf="!totalEditalSuspenso" class="spinner-border text-primary" role="status">
+               <span class="sr-only">Loading...</span>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="row mt-5">
+      <div class="col-md-12">
+         <form class="d-flex justify-content-center align-items-center flex-column" [formGroup]="filtroForm">
+            <div *ngIf="!dadosForm" class="d-flex justify-content-center">
+               <div class="spinner-border text-primary" role="status">
+                 <span class="sr-only">Loading...</span>
+               </div>
+            </div>
+            <div class="card cardFiltro my-1 py-3" *ngIf="dadosForm">
+               <legend
+                  class="tituloCard"
+                  data-toggle="collapse"
+                  data-target="#edital"
+                  aria-expanded="false"
+                  aria-controls="edital"
+                  (click)="toogleCard()">
+                     <span>Filtros</span>
+                     <i [ngClass]="{'fa-chevron-up': !cardExpandido, 'fa-chevron-down': cardExpandido}" class="fa"></i>
+               </legend>
+               <div class="collapse blockForm mx-5 mt-2 px-3 py-2" id="edital">
+                  <div class="form-row d-flex justify-content-between">
+                     <div class="form-group col-md-2">
+                        <label class="active">ID</label>
+                        <input type="number" formControlName="id" name="id" class="form-control px-2">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-2">
+                        <label class="active">Número do Edital</label>
+                        <input type="text" formControlName="numEdital" name="numEdital" class="form-control px-2">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-2">
+                        <label class="active">Clientes</label>
+                        <select formControlName="cliente" class="form-control px-2" name="cliente">
+                           <option value=""  [selected]="true">--Selecione--</option>
+                           <option *ngFor="let cliente of dadosForm.clientes" value="{{ cliente.id }}">{{ cliente.apelido }}</option>
+                        </select>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Data Abertura Edital (Inicio)</label>
+                        <input formControlName="dataAberturaEditalInicio" class="form-control px-2" placeholder="Selecione a data" type="date" name="dataAberturaEditalInicio">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Data Abertura Edital (Final)</label>
+                        <input type="date" formControlName="dataAberturaEditalFinal" class="form-control px-2" aria-describedby="Usuario" name="dataAberturaEditalFinal">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                  </div>
+                  <div class="form-row d-flex justify-content-between mt-2">
+                     <div class="form-group col-md-2">
+                        <label class="active">Modalidade</label>
+                        <select formControlName="modalidade" class="form-control px-2">
+                           <option value=""  [selected]="true">--Selecione--</option>
+                           <option *ngFor="let modalidade of dadosForm.modalidades" value="{{ modalidade.id }}">{{ modalidade.nome }}</option>
+                        </select>
+                     </div>
+                     <div class="form-group col-md-2">
+                        <label class="active">Região</label>
+                        <select formControlName="regiao" class="form-control px-2">
+                           <option value=""  [selected]="true">--Selecione--</option>
+                           <option *ngFor="let regiao of dadosForm.regioes" value="{{ regiao.id }}">{{ regiao.nome }}</option>
+                        </select>
+                     </div>
+                     <div class="form-group col-md-2">
+                        <label class="active">UF</label>
+                        <select formControlName="estado" class="form-control px-2" placeholder="Selecione um Estado">
+                           <option value=""  [selected]="true">--Selecione--</option>
+                           <option *ngFor="let estado of dadosForm.estados" value="{{ estado.id }}">{{ estado.nome }}</option>
+                        </select>
+                     </div>
+                     <div class="form-group col-md-1">
+                        <label class="active">UASG</label>
+                        <input type="text" formControlName="uasg" class="form-control px-2" aria-describedby="Usuario" maxlength="20">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-2">
+                        <label class="active">Consórcio</label>
+                        <select formControlName="consorcio" class="form-control px-2">
+                           <option value=""  [selected]="true">--Selecione--</option>
+                           <option value="Não">Não</option>
+                           <option value="Sim">Sim</option>
+                        </select>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Portal</label>
+                       <select formControlName="portal" class="form-control">
+                          <option value=""  [selected]="true">--Selecione--</option>
+                          <option *ngFor="let portal of dadosForm.portais" value="{{ portal.id }}">{{ portal.nome }}</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-row d-flex justify-content-start mt-2">
+                     <div class="form-group col-md-3">
+                        <label class="active">Valor Estimado (Inicio)</label>
+                        <input type="number" formControlName="valorEstimadoInicio" class="form-control px-2" aria-describedby="Usuario" placeholder="R$ 0,00">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Valor Estimado (Final)</label>
+                        <input type="number" formControlName="valorEstimadoFinal" class="form-control px-2" aria-describedby="Usuario" placeholder="R$ 0,00">
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Gerente de Contas</label>
+                        <select formControlName="gerenteDeContas" class="form-control px-2">
+                           <option value=""  [selected]="true">--Selecione--</option>
+                           <option *ngFor="let gerente of dadosForm.gerentes" value="{{ gerente.id }}">{{ gerente.nome }}</option>
+                        </select>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Diretor Comercial</label>
+                        <select formControlName="diretorComercial" class="form-control px-2">
+                           <option value=""  [selected]="true">--Selecione--</option>
+                           <option *ngFor="let diretor of dadosForm.diretores" value="{{ diretor.id }}">{{ diretor.nome }}</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-row d-flex justify-content-start mt-2">
+                     <div class="form-group col-md-3">
+                        <label class="active">Categoria</label>
+                        <select formControlName="categoria" class="form-control px-2">
+                           <option value="" [selected]="true">--Selecione--</option>
+                           <option *ngFor="let categoria of dadosForm.categorias" value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                        </select>
+                     </div>
+                     <div class="form-group col-md-2">
+                        <label class="active">Bu</label>
+                        <select formControlName="bu" class="form-control px-2">
+                           <option value="" [selected]="true">--Selecione--</option>
+                           <option *ngFor="let bu of dadosForm.bus" value="{{ bu.id }}">{{ bu.nome }}</option>
+                        </select>
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label class="active">Empresa</label>
+                        <select formControlName="empresa" class="form-control px-2">
+                           <option value="" [selected]="true">--Selecione--</option>
+                           <option *ngFor="let empresa of dadosForm.empresas" value="{{ empresa.id }}">{{ empresa.nome }}</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-row d-flex justify-content-end">
+                     <div class="btn-group" role="group">
+                        <button (click)="filtrar()" class="btn btn-info btn-lg botao">Filtrar</button>
+                        <button (click)="limparFiltros()" class="btn btn-warning btn-lg botao">Limpar</button>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <div class="row" *ngIf="exibirTabelaPainel">
+      <div class="col-ms-12 col-md-12 py-3 d-flex justify-content-center align-items-center">
+         <app-tabela-painel
+            [tipo]="tituloTabelaPainel == 'EDITAIS SUSPENSOS' ? 'Suspenso' : 'Painel'"
+            [titulo]="tituloTabelaPainel"
+            [editais]="editaisPainel"
+            [funcaoNoEdital]="alterarEdital"
+            (enviarSinalFechar)="reciverFecharTabelaPainel($event)">
+         </app-tabela-painel>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="col-ms-12 col-md-12 py-3 d-flex justify-content-center align-items-center">
+         <app-tabela-parecer
+            [tipo]="'licitacao'"
+            [funcaoNoEdital]="emitirParecerLicitacao"
+            [titulo]="'PRÓXIMOS EDITAIS (GO)'"
+            [etapa]="'3'"
+            [editais]="editaisAguardandoLicitacao">
+         </app-tabela-parecer>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-ms-12 col-md-12 py-3 d-flex justify-content-center align-items-center">
+         <app-tabela-parecer
+            [tipo]="'gerente'"
+            [funcaoNoEdital]="emitirParecerGerente"
+            [titulo]="'AGUARDANDO PARECER GERENTE DE CONTAS'"
+            [etapa]="'1'"
+            [editais]="editaisAguardandoGerente">
+         </app-tabela-parecer>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-ms-12 col-md-12 py-3 d-flex justify-content-center align-items-center">
+         <app-tabela-parecer
+            [tipo]="'diretor'"
+            [funcaoNoEdital]="emitirParecerDiretor"
+            [titulo]="'AGUARDANDO PARECER DIRETOR COMERCIAL'"
+            [etapa]="'2'"
+            [editais]="editaisAguardandoDiretor">
+         </app-tabela-parecer>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-ms-12 col-md-12 py-3 d-flex justify-content-center align-items-center">
+         <app-tabela-parecer
+            [tipo]="'acompanhar'"
+            [funcaoNoEdital]="emitirParecerLicitacaoFinalizar"
+            [titulo]="'ACOMPANHAR'"
+            [etapa]="'4'"
+            [editais]="editaisAcompanhar">
+         </app-tabela-parecer>
+      </div>
+   </div>
+
+</div>

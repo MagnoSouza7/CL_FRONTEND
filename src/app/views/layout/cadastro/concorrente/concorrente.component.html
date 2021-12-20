@@ -1,0 +1,31 @@
+<div class="container-fluid">
+   <div class="row mb-4">
+      <div class="col-md-12">
+         <app-formulario-cadastro
+            [form]="concorrenteForm"
+            [titulo]="'Concorrente'"
+            [id]="concorrenteId"
+            [tipo]="'concorrente'"
+            [dados]="concorrentes"
+            [exibirListagem]="exibirListagem"
+            (cadastrar)="cadastrarConcorrente()"
+            (alterar)="alterarConcorrente()"
+            (limpar)="limpar()"
+            (verificar)="verificarConcorrente($event)"
+            (exibir)="exibirLista()"
+            (selecionar)="selecionarConcorrente($event)"
+            [verifyNomes]="verifyConcorrente">
+         </app-formulario-cadastro>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-md-12 d-flex justify-content-center align-items-center">
+         <app-tabela-cadastro
+            [titulo]="'Concorrente'"
+            [tipo]="'concorrente'"
+            [dados]="concorrentes"
+            (pegarDado)="selecionarConcorrente($event)">
+         </app-tabela-cadastro>
+      </div>
+   </div>
+</div>
